@@ -5,12 +5,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserService } from './services/user.service';
 import { User } from './entities/user.entity';
-import { MedicalHistory } from './entities/medical-history.entity';
-import { MedicalHistoriesController } from './controller/medical-histories/medical-histories.controller';
-import { MedicalHistoriesService } from './services/medical-histories.service';
-import { MedicalDiagnostic } from './entities/medical-diagnostic.entity';
-import { MedicalDiagnosticController } from './controller/medical-diagnostic/medical-diagnostic.controller';
-import { MedicalDiagnosticService } from './services/medical-diagnostic.service';
+import { UsersController } from './controller/users/users.controller';
 
 @Module({
   imports: [
@@ -18,16 +13,16 @@ import { MedicalDiagnosticService } from './services/medical-diagnostic.service'
       envFilePath: '.development.env',
       isGlobal: true,
     }),
-    TypeOrmModule.forFeature([User, MedicalHistory, MedicalDiagnostic]),
+    TypeOrmModule.forFeature([User]),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
-        host: '52.7.185.136',
+        host: 'localhost',
         port: 5432,
-        username:  'rem0ti_us3r',
-        password: 'postgrespw/*',
-        database: 'nest_api',
+        username:  'root',
+        password: 'root',
+        database: 'postgres',
         autoLoadEntities: true,
         synchronize: true,
         
@@ -37,14 +32,13 @@ import { MedicalDiagnosticService } from './services/medical-diagnostic.service'
   ],
   controllers: [
     AppController,
-    MedicalHistoriesController,
-    MedicalDiagnosticController,
+    UsersController
+    
   ],
   providers: [
     AppService,
     UserService,
-    MedicalHistoriesService,
-    MedicalDiagnosticService,
+    
   ],
 })
 export class AppModule {}

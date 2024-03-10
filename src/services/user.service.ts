@@ -18,6 +18,13 @@ export class UserService {
   createUser(user: User) {
     return this.userRepository.save(user);
   }
+  updateUser(user: User, id: number) {
+    return this.userRepository.update(id, user);
+  }
+  deleteUser(id: number) {
+    return this.userRepository.delete(id);
+  }
+
 }
 
 //Servicio de usuario
